@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-01-24 Sat 22:40 -->
+<!-- 2026-01-25 Sun 20:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Alpha Generated from TVL and Twitter</title>
@@ -251,8 +251,8 @@ $(function() {    $('.note').before("<p class='admonition-title note'>Note</p>")
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge7d87dc">1. TVL and X Followers Multisort Portfolios</a></li>
-<li><a href="#org537ee08">2. Tests for Significant Alpha</a></li>
+<li><a href="#org0ce8a63">1. TVL and X Followers Multisort Portfolios</a></li>
+<li><a href="#org1f33628">2. Tests for Significant Alpha</a></li>
 </ul>
 </div>
 </div>
@@ -263,23 +263,23 @@ Using TVL sorted portfolios, Brigida (2025)<sup><a id="fnr.1" class="footref" hr
 <p>
 In this notebook I test portfolios sorted on both TVL and new X (Twitter) followers (both scaled by market cap).  I find that the mean return on a new X followers and TVL sorted portfolio is not significantly positive.  However, the alpha in a linear regression of the portfolio returns on a crypto two-factor model is positive and significant, as is Hansen's J-statistic.  In sum, we document large positive pricing errors (alphas) for TVL and X followers multisort portfolios relative to a 2-factor model, while a significant Hansen J-stat indicates the benchmark is rejected, so we interpret these results as tentative evidence of abnormal performance.
 </p>
-<div id="outline-container-orge7d87dc" class="outline-2">
-<h2 id="orge7d87dc"><span class="section-number-2">1.</span> TVL and X Followers Multisort Portfolios</h2>
+<div id="outline-container-org0ce8a63" class="outline-2">
+<h2 id="org0ce8a63"><span class="section-number-2">1.</span> TVL and X Followers Multisort Portfolios</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-In my tests I follow the standard Fama–French 2×3 portfolio construction, adapted to crypto. Each period I rank all eligible tokens on two characteristics measured in the prior period: total value locked (TVL) and new X followers (scaled by market cap). First, I split tokens into Small TVL and Big TVL groups using the median TVL. Independently, I sort tokens into three X-activity groups — Low, Medium, and High DEX volume — using the 30th and 70th percentiles of the X measure. Taking the intersection of these two independent sorts gives six portfolios: Small–Low (SL), Small–Medium (SM), Small–High (SH), Big–Low (BL), Big–Medium (BM), and Big–High (BH). I then track the value-weighted returns of these six portfolios over the next period. This 2×3 design lets me see how returns vary jointly with TVL and new X followers, and then build long–short factors (e.g., high-minus-low X followers controlling for TVL) to test whether these characteristics earn a risk premium.
+In my tests I follow the standard Fama–French 2×3 portfolio construction, adapted to crypto. Each period I rank all eligible tokens on two characteristics measured in the prior period: total value locked (TVL) and new X followers (scaled by market cap). First, I split tokens into Small TVL and Big TVL groups using the median TVL. Independently, I sort tokens into three X-activity groups — Low, Medium, and High X followers — using the 30th and 70th percentiles of the X measure. Taking the intersection of these two independent sorts gives six portfolios: Small–Low (SL), Small–Medium (SM), Small–High (SH), Big–Low (BL), Big–Medium (BM), and Big–High (BH). I then track the value-weighted returns of these six portfolios over the next period. This 2×3 design lets me see how returns vary jointly with TVL and new X followers, and then build long–short factors (e.g., high-minus-low X followers controlling for TVL) to test whether these characteristics earn a risk premium.
 </p>
 </div>
-<div id="outline-container-org6987341" class="outline-3">
-<h3 id="org6987341"><span class="section-number-3">1.1.</span> Data</h3>
+<div id="outline-container-org4b97a61" class="outline-3">
+<h3 id="org4b97a61"><span class="section-number-3">1.1.</span> Data</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Our data is sampled at the weekly frequency, and ranges from 1/3/2022 to 7/28/2025.  We include all coins that were in the top 100 over any part of the sample period, though we exclude Bitcoin and all stablecoins.  Returns are quoted in percentage points.
 </p>
 </div>
 </div>
-<div id="outline-container-org07ff96b" class="outline-3">
-<h3 id="org07ff96b"><span class="section-number-3">1.2.</span> TVL (size) factor: Small minus Big TVL (\(SMB_{TVL}\))</h3>
+<div id="outline-container-org09b27c8" class="outline-3">
+<h3 id="org09b27c8"><span class="section-number-3">1.2.</span> TVL (size) factor: Small minus Big TVL (\(SMB_{TVL}\))</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 The long-short \(SMB_{TVL}\) portfolio measures whether TVL is a rewarded risk controlling for new X followers to market cap.
@@ -307,7 +307,7 @@ max    19.59
 
 
 <p>
-The portfolio has a weekly mean return of <code>0.12</code> %, and given the T-test below, the mean return is not significantly different from 0.
+The portfolio has a weekly mean return of <code>0.12</code> %, and given the result below, the mean return is not significantly different from 0 under a simple i.i.d T-test.
 </p>
 
 <pre class="example">
@@ -318,21 +318,21 @@ TtestResult(statistic=array([0.14361226]), pvalue=array([0.88624425]), df=array(
 
 
 
-<div id="org28ad17f" class="figure">
+<div id="org4bae7f7" class="figure">
 <p><img src="./multi_SMB.png" alt="multi_SMB.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org771f135" class="outline-3">
-<h3 id="org771f135"><span class="section-number-3">1.3.</span> X factor: High New X Followers minus Low New X Followers (\(HML_{X}\)), neutral to TVL</h3>
+<div id="outline-container-orgd73f3d7" class="outline-3">
+<h3 id="orgd73f3d7"><span class="section-number-3">1.3.</span> X factor: High New X Followers minus Low New X Followers (\(HML_{X}\)), neutral to TVL</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
-This long-short portfolio is long tokens with more DEX volume (per market cap) and short tokens low new X followers, while controlling for TVL.
+This long-short portfolio is long tokens with more X new followers (per market cap) and short tokens low new X followers, while controlling for TVL.
 </p>
 
 <p>
-\[\text{DEX}_{{HML}_t} = \frac{1}{2}\bigl(R_{SH,t} + R_{BH,t}\bigr) - \frac{1}{2}\bigl(R_{SL,t} + R_{BL,t}\bigr)\]
+\[\text{X}_{{HML}_t} = \frac{1}{2}\bigl(R_{SH,t} + R_{BH,t}\bigr) - \frac{1}{2}\bigl(R_{SL,t} + R_{BL,t}\bigr)\]
 </p>
 
 <p>
@@ -362,22 +362,22 @@ TtestResult(statistic=array([1.46850047]), pvalue=array([0.14664785]), df=array(
 
 
 
-<div id="orga8746d6" class="figure">
+<div id="orgf8eb1c2" class="figure">
 <p><img src="./multi_HML.png" alt="multi_HML.png" />
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org537ee08" class="outline-2">
-<h2 id="org537ee08"><span class="section-number-2">2.</span> Tests for Significant Alpha</h2>
+<div id="outline-container-org1f33628" class="outline-2">
+<h2 id="org1f33628"><span class="section-number-2">2.</span> Tests for Significant Alpha</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 To test whether my TVL–X portfolios earn any abnormal returns (alpha), I use a t-test on the intercept of a standard linear factor model and Hansen’s J-statistic<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> for a joint alpha test.
 </p>
 
 <p>
-I start from a 2×3 sort on lagged total value locked (TVL) and DEX volume (both scaled by market cap), which gives me two test portfolios. For each portfolio, I ask whether its average excess return can be explained by two simple crypto risk factors:
+I start from a 2×3 sort on lagged total value locked (TVL) and new X followers (both scaled by market cap), which gives me two test portfolios. For each portfolio, I ask whether its average excess return can be explained by two simple crypto risk factors:
 	​
 </p>
 <ul class="org-ul">
@@ -405,25 +405,25 @@ and
 and then test whether \(\alpha_1\) and \(\alpha_2\) are individually and jointly equal to 0 via t-tests and Hansen's J-Statistic.
 </p>
 </div>
-<div id="outline-container-org9af7296" class="outline-3">
-<h3 id="org9af7296"><span class="section-number-3">2.1.</span> Results</h3>
+<div id="outline-container-org59a162e" class="outline-3">
+<h3 id="org59a162e"><span class="section-number-3">2.1.</span> Results</h3>
 <div class="outline-text-3" id="text-2-1">
 </div>
-<div id="outline-container-org1557c0c" class="outline-4">
-<h4 id="org1557c0c"><span class="section-number-4">2.1.1.</span> Single Portfolio Tests</h4>
+<div id="outline-container-orgfb170d9" class="outline-4">
+<h4 id="orgfb170d9"><span class="section-number-4">2.1.1.</span> Single Portfolio Tests</h4>
 <div class="outline-text-4" id="text-2-1-1">
 </div>
 <ol class="org-ol">
-<li><a id="org6e3f854"></a>\(TVL_{SMB}\) Portfolio<br />
+<li><a id="orge689365"></a>\(TVL_{SMB}\) Portfolio<br />
 <div class="outline-text-5" id="text-2-1-1-1">
-<pre class="example" id="orgaff3645">
+<pre class="example" id="org623317c">
                             OLS Regression Results                            
 ==============================================================================
 Dep. Variable:              multi_SMB   R-squared:                       0.234
 Model:                            OLS   Adj. R-squared:                  0.210
 Method:                 Least Squares   F-statistic:                     19.61
-Date:                Sat, 24 Jan 2026   Prob (F-statistic):           2.28e-07
-Time:                        22:40:49   Log-Likelihood:                -213.18
+Date:                Sun, 25 Jan 2026   Prob (F-statistic):           2.28e-07
+Time:                        20:01:28   Log-Likelihood:                -213.18
 No. Observations:                  67   AIC:                             432.4
 Df Residuals:                      64   BIC:                             439.0
 Df Model:                           2                                         
@@ -446,7 +446,7 @@ Notes:
 </pre>
 </div>
 </li>
-<li><a id="orgd95c28d"></a>\(X_{HML}\) Portfolio<br />
+<li><a id="org6af1dad"></a>\(X_{HML}\) Portfolio<br />
 <div class="outline-text-5" id="text-2-1-1-2">
 <p>
 Regressing HML portfolio returns on our two factors yields a weekly alpha of 5.68%, which is significant at the 1% level.  We use Newey–West (HAC) standard errors to account for heteroskedasticity and autocorrelation in weekly returns.
@@ -456,14 +456,14 @@ Regressing HML portfolio returns on our two factors yields a weekly alpha of 5.6
 Heteroscedasticity and autocorrelation robust standard errors:
 </p>
 
-<pre class="example" id="org4bb35d7">
+<pre class="example" id="org1c66156">
                             OLS Regression Results                            
 ==============================================================================
 Dep. Variable:              multi_HML   R-squared:                       0.228
 Model:                            OLS   Adj. R-squared:                  0.204
 Method:                 Least Squares   F-statistic:                     4.818
-Date:                Sat, 24 Jan 2026   Prob (F-statistic):             0.0112
-Time:                        22:40:49   Log-Likelihood:                -255.05
+Date:                Sun, 25 Jan 2026   Prob (F-statistic):             0.0112
+Time:                        20:01:28   Log-Likelihood:                -255.05
 No. Observations:                  67   AIC:                             516.1
 Df Residuals:                      64   BIC:                             522.7
 Df Model:                           2                                         
@@ -488,17 +488,17 @@ Notes:
 </li>
 </ol>
 </div>
-<div id="outline-container-orgdee4a91" class="outline-4">
-<h4 id="orgdee4a91"><span class="section-number-4">2.1.2.</span> Joint Test</h4>
+<div id="outline-container-orgd1a7f7e" class="outline-4">
+<h4 id="orgd1a7f7e"><span class="section-number-4">2.1.2.</span> Joint Test</h4>
 <div class="outline-text-4" id="text-2-1-2">
-<pre class="example" id="org0b025a6">
+<pre class="example" id="orgf8778fb">
                       TradedFactorModel Estimation Summary                      
 ================================================================================
 No. Test Portfolios:                  2   R-squared:                      0.2291
 No. Factors:                          2   J-statistic:                    15.909
 No. Observations:                    67   P-value                         0.0004
-Date:                  Sat, Jan 24 2026   Distribution:                  chi2(2)
-Time:                          22:40:49                                         
+Date:                  Sun, Jan 25 2026   Distribution:                  chi2(2)
+Time:                          20:01:28                                         
 Cov. Estimator:                  kernel                                         
                                                                                 
                                  Risk Premia Estimates                                  
@@ -515,7 +515,7 @@ See full_summary for complete results
 </pre>
 
 <p>
-See the results above, estimated via the <code>Traded Factor Model</code> method from the <code>linearmodels</code> python package.  Hansen's J-Statistic (<code>15.91</code>) is a test of whether the alpha coefficients are jointly equal to 0 (the null hypothesis). We reject the null with the statistics p-value of <code>0.0</code>.  This is evidence that the two-factor model does not span the multisort portfolio returns.
+See the results above, estimated via the <code>Traded Factor Model</code> method from the <code>linearmodels</code> python package.  Hansen's J-Statistic (<code>15.91</code>) is a test of whether the alpha coefficients are jointly equal to 0 (the null hypothesis). We reject the null with the statistics p-value of <code>0.0004</code>.  This is evidence that the two-factor model does not span the multisort portfolio returns.
 </p>
 </div>
 </div>
@@ -538,7 +538,7 @@ Hansen, Lars Peter (1982), "Large Sample Properties of Generalized Method of Mom
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida</p>
-<p class="date">Created: 2026-01-24 Sat 22:40</p>
+<p class="date">Created: 2026-01-25 Sun 20:01</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
